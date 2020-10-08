@@ -15,3 +15,11 @@ A proficiência é demonstrada a partir do resultado dos testes:
 
 **ATENÇÃO** A suite de testes utilizada para correção pode conter exemplos adicionais para evitar
 implementações que mirem especificamente nos testes.
+
+
+Entrega
+-------
+
+O trabalho deverá ser entregue até dia 16/10 utilizando-se formulário disponibilizado pelo professor.
+Atrasos de até 1 emana serão penalizados em 2 acertos e atrasos maiores implicarão no não-recebimento 
+do trabalho. O aluno nesta situação terá que propor outra atividade para comprovar proficiência. 
