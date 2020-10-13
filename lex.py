@@ -21,7 +21,8 @@ def lex(code: str) -> Iterable[Token]:
         ('LPAR', r'\('),
         ('RPAR', r'\)'),
         ('NUMBER', r'\+?\-?\d+(\.\d*)?([eE][+-]?\d+)?'),
-        ('BOOL', r'#[t|f]'),
+        ('BOOL', r'\#[t|f]'),
+        ('CHAR', r'\#\\[\w]+')
     ]
     tok_regex = '|'.join('(?P<%s>%s)' % pair for pair in token_specification)
     for mo in re.finditer(tok_regex, code):
@@ -30,7 +31,7 @@ def lex(code: str) -> Iterable[Token]:
         yield Token(kind, value)
 
 # exemplos = [
-#     "#t #f"
+#     r"#\a #\Backspace"
 # ]
 
 # for ex in exemplos:
