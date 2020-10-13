@@ -23,7 +23,7 @@ def lex(code: str) -> Iterable[Token]:
         ('NUMBER', r'\+?\-?\d+(\.\d*)?([eE][+-]?\d+)?'),
         ('BOOL', r'\#[t|f]'),
         ('CHAR', r'\#\\[\w]+|\d+'),
-        ('STRING', r'\"[^"]*\"')
+        ('STRING', r'\"[^"\\]*(\\[^\n\t\r\f][^"\\]*)*\"')
     ]
     tok_regex = '|'.join('(?P<%s>%s)' % pair for pair in token_specification)
     for mo in re.finditer(tok_regex, code):
@@ -31,13 +31,14 @@ def lex(code: str) -> Iterable[Token]:
         value = mo.group()
         yield Token(kind, value)
 
-# exemplos = [
-#     r'"hello world"',
-#     r'"hello2 world"',
-#     r'"hello-world"',
-# ]
+exemplos = [
+    r'"hello world"',
+    r'"hello2 world"',
+    r'"hello-world"',
+    r'"hello \"world\""'
+]
 
-# for ex in exemplos:
-#     for tok in lex(ex):
-#         print('    ', tok)
-#     print()
+for ex in exemplos:
+    for tok in lex(ex):
+        print('    ', tok)
+    print()
