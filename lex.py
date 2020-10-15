@@ -15,30 +15,20 @@ def lex(code: str) -> Iterable[Token]:
     Retorna sequência de objetos do tipo token correspondendo à análise léxica
     da string de código fornecida.
     """
-    #keywords = {'IF', 'THEN', 'ENDIF', 'FOR', 'NEXT', 'GOSUB', 'RETURN'}
     token_specification = [
-        ('NAME', r"[a-zA-Z_][a-zA-Z_0-9]*"),
+        ('NUMBER', r'\+?\-?\d+(\.\d*)?([eE][+-]?\d+)?'),
+        ('NAME', r"([^()\"\n \#\;]+)"),
         ('LPAR', r'\('),
         ('RPAR', r'\)'),
-        ('NUMBER', r'\+?\-?\d+(\.\d*)?([eE][+-]?\d+)?'),
         ('BOOL', r'\#[t|f]'),
         ('CHAR', r'\#\\[\w]+|\d+'),
-        ('STRING', r'\"[^"\\]*(\\[^\n\t\r\f][^"\\]*)*\"')
+        ('STRING', r'\"[^"\\]*(\\[^\n\t\r\f][^"\\]*)*\"'),
+        ('COMMENT', r'\;([^\n\r]+)'),
     ]
     tok_regex = '|'.join('(?P<%s>%s)' % pair for pair in token_specification)
     for mo in re.finditer(tok_regex, code):
         kind = mo.lastgroup
         value = mo.group()
+        if kind == 'COMMENT':
+            continue
         yield Token(kind, value)
-
-exemplos = [
-    r'"hello world"',
-    r'"hello2 world"',
-    r'"hello-world"',
-    r'"hello \"world\""'
-]
-
-for ex in exemplos:
-    for tok in lex(ex):
-        print('    ', tok)
-    print()
