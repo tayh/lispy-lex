@@ -6,10 +6,6 @@ class Token(NamedTuple):
     kind: str
     value: str
 
-def tokenize(chars: str) -> list:
-    "Convert a string of characters into a list of tokens."
-    return chars.replace('(', ' ( ').replace(')', ' ) ').split()
-
 def lex(code: str) -> Iterable[Token]:
     """
     Retorna sequência de objetos do tipo token correspondendo à análise léxica
